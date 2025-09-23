@@ -141,3 +141,6 @@ vite.config.ts.timestamp-*
 .vs/
 .jj/
 venv/
+__pycache__/
+fastapi-backend/.coverage
+fastapi-backend/crud_dev.db
