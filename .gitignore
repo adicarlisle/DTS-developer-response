@@ -144,3 +144,4 @@ venv/
 __pycache__/
 fastapi-backend/.coverage
 fastapi-backend/crud_dev.db
+fastapi-backend/test.db
