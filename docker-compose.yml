@@ -1,0 +1,48 @@
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: crud_db
+      MYSQL_USER: apiuser
+      MYSQL_PASSWORD: apipassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  fastapi-backend:
+    build:
+      context: ./fastapi-backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: mysql+pymysql://apiuser:apipassword@mysql:3306/crud_db
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./fastapi-backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  react-frontend:
+    build:
+      context: ./react-router-frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      API_URL: http://fastapi-backend:8000
+    depends_on:
+      - fastapi-backend
+
+volumes:
+  mysql_data:
