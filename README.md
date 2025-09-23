@@ -1,136 +1,236 @@
-# DTS-developer-response
+# Task Management API - HMCTS Technical Assessment
 
-<div align="center">
+A full-stack task management application built with FastAPI (backend) and React (frontend) for HMCTS coding challenge.
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688.svg?style=flat&logo=FastAPI&logoColor=white)](https://fastapi.tiangolo.com)
-[![React](https://img.shields.io/badge/React-19.1.0-61dafb.svg?style=flat&logo=react&logoColor=white)](https://reactjs.org/)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479a1.svg?style=flat&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ed.svg?style=flat&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+## 🚀 Features
 
-![GitHub last commit](https://img.shields.io/github/last-commit/adica/DTS-developer-response)
-![GitHub repo size](https://img.shields.io/github/repo-size/adica/DTS-developer-response)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/adica/DTS-developer-response)
-![GitHub top language](https://img.shields.io/github/languages/top/adica/DTS-developer-response)
+- **RESTful API** with complete CRUD operations
+- **SQLAlchemy ORM** with support for both MySQL (production) and SQLite (development)
+- **Comprehensive test suite** with coverage reporting
+- **Docker support** for containerized deployment
+- **API documentation** with OpenAPI/Swagger
+- **Type safety** with Pydantic models
+- **Database migrations** ready architecture
 
-</div>
+## 📋 Prerequisites
 
-## 📋 About
+- Python 3.11+
+- Node.js 18+
+- Docker and Docker Compose (optional)
+- Git
 
-My submission to a coding challenge for the MOJ. This is a full-stack CRUD application built with modern web technologies.
-
-📄 **[View Challenge Requirements](./CHALLENGE.md)**
-
-## 🚀 Tech Stack
+## 🛠️ Tech Stack
 
 ### Backend
-- **FastAPI** - Modern, fast web framework for building APIs
-- **SQLAlchemy** - SQL toolkit and ORM
-- **MySQL** - Relational database
-- **Uvicorn** - Lightning-fast ASGI server
+- **FastAPI** - Modern web framework for building APIs
+- **SQLAlchemy 2.0** - SQL toolkit and ORM
+- **Pydantic** - Data validation using Python type annotations
+- **MySQL/SQLite** - Database (MySQL in Docker, SQLite for local dev)
+- **pytest** - Testing framework with coverage support
 
 ### Frontend
-- **React Router** - Full stack React framework
-- **React 19** - Latest React with concurrent features
-- **TypeScript** - Type safety and better DX
-- **Tailwind CSS** - Utility-first CSS framework
+- **React** - UI library
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Build tool and dev server
 
-### Infrastructure
-- **Docker** - Containerization
-- **Docker Compose** - Multi-container orchestration
-
-## 📊 Project Structure
+## 🏗️ Project Structure
 
 ```
 DTS-developer-response/
-├── fastapi-backend/     # FastAPI backend service
-│   ├── main.py         # Application entry point
-│   ├── models.py       # SQLAlchemy models
-│   ├── database.py     # Database configuration
-│   └── Dockerfile      # Backend container config
-├── react-router-frontend/  # React frontend
-│   ├── app/            # React Router app
-│   ├── package.json    # Node dependencies
-│   └── Dockerfile      # Frontend container config
-├── docker-compose.yml  # Multi-container orchestration
-└── README.md          # This file
+├── fastapi-backend/         # Backend API
+│   ├── main.py            # FastAPI application & endpoints
+│   ├── models.py          # SQLAlchemy models
+│   ├── schemas.py         # Pydantic schemas
+│   ├── crud.py            # CRUD operations
+│   ├── database.py        # Database configuration
+│   ├── requirements.txt   # Python dependencies
+│   ├── Dockerfile         # Backend container config
+│   └── tests/             # Test suite
+│       ├── conftest.py    # Test configuration
+│       ├── test_tasks.py  # Unit tests
+│       └── test_integration.py # Integration tests
+├── react-frontend/         # Frontend application
+│   ├── src/               # React source code
+│   ├── package.json       # Node dependencies
+│   └── Dockerfile         # Frontend container config
+├── docker-compose.yml      # Multi-container setup
+└── README.md              # This file
 ```
 
-## 🛠️ Usage
+## 🚀 Quick Start
 
-This is a Dockerized application using docker-compose. Your build environment for this project must include Docker and Docker Compose.
+### Local Development
 
-### Prerequisites
-
-- Docker Engine 20.10+
-- Docker Compose 2.0+
-- 4GB RAM minimum
-- 10GB free disk space
-
-### Quick Start
-
-1. Clone the repository:
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/adicarlisle/DTS-developer-response.git
+   git clone <repository-url>
    cd DTS-developer-response
    ```
 
-2. Start all services:
+2. **Backend Setup**
    ```bash
-   docker-compose up --build
+   cd fastapi-backend
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip3 install -r requirements.txt
    ```
 
-3. Access the applications:
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-   - API Documentation: http://localhost:8000/docs
+3. **Run the Backend**
+   ```bash
+   uvicorn main:app --reload
+   ```
+   The API will be available at http://localhost:8000
 
-### Development
+4. **Frontend Setup** (in a new terminal)
+   ```bash
+   cd react-frontend
+   npm install
+   npm run dev
+   ```
+   The frontend will be available at http://localhost:3000
 
-For development with hot-reload:
+### Docker Deployment
+
+Run the entire stack with Docker Compose:
 
 ```bash
-# Start services in development mode
-docker-compose up
-
-# View logs
-docker-compose logs -f [service-name]
-
-# Stop all services
-docker-compose down
+docker-compose up --build
 ```
 
-## 📈 API Endpoints
+Services will be available at:
+- Backend API: http://localhost:8000
+- Frontend: http://localhost:3000
+- API Documentation: http://localhost:8000/docs
+
+## 📚 API Documentation
+
+### Interactive Documentation
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+### API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET    | `/users/` | List all users |
-| POST   | `/users/` | Create a new user |
-| GET    | `/users/{id}` | Get user by ID |
-| GET    | `/posts/` | List all posts |
-| POST   | `/posts/` | Create a new post |
+| GET | `/` | Health check endpoint |
+| POST | `/tasks/` | Create a new task |
+| GET | `/tasks/` | Get all tasks (with pagination) |
+| GET | `/tasks/{task_id}` | Get a specific task |
+| PUT | `/tasks/{task_id}` | Update a task |
+| PATCH | `/tasks/{task_id}/status` | Update task status only |
+| DELETE | `/tasks/{task_id}` | Delete a task |
+
+### Task Model
+
+```json
+{
+  "id": 1,
+  "title": "Complete technical assessment",
+  "description": "Build a CRUD API for task management",
+  "status": "in_progress",
+  "due_date": "2025-12-31T10:00:00",
+  "created_at": "2025-09-23T10:00:00",
+  "updated_at": "2025-09-23T10:00:00"
+}
+```
+
+### Status Values
+- `todo` - Task not started
+- `in_progress` - Task in progress
+- `completed` - Task completed
+- `cancelled` - Task cancelled
 
 ## 🧪 Testing
 
+### Run Tests
 ```bash
-# Run backend tests
-docker-compose exec fastapi-backend pytest
-
-# Run frontend tests
-docker-compose exec react-frontend npm test
+cd fastapi-backend
+python3 -m pytest tests/ -v
 ```
 
-## 📝 Development Journal
+### Run Tests with Coverage
+```bash
+# Using the script
+./run_coverage.sh
 
-[Development notes and decision log can be found here](#development-journal)
+# Using make
+make coverage
 
-## 📄 License
+# Using pytest directly
+python3 -m pytest tests/ --cov=. --cov-report=term-missing --cov-report=html -v
+```
 
-This project is part of a coding challenge submission.
+### View Coverage Report
+```bash
+# Serve HTML report
+make serve-coverage
+# Open http://localhost:8080 in your browser
 
----
+# Or open directly
+$BROWSER htmlcov/index.html
+```
 
-<div align="center">
+### Test the API Manually
+```bash
+cd fastapi-backend
+python3 test_api.py
+```
 
-**[Challenge](./CHALLENGE.md)** • **[Report Issue](https://github.com/adica/DTS-developer-response/issues)** • **[Documentation](http://localhost:8000/docs)**
+## 🔧 Configuration
 
-</div>
+### Environment Variables
+
+Create a `.env` file in the `fastapi-backend` directory:
+
+```env
+# Database URL for production (optional)
+DATABASE_URL=mysql+pymysql://user:password@localhost:3306/taskdb
+
+# If not set, SQLite will be used for development
+```
+
+### Database Configuration
+
+The application automatically selects the database based on the environment:
+- **Production/Docker**: MySQL (when `DATABASE_URL` is set)
+- **Development**: SQLite (automatic fallback)
+
+## 📦 Make Commands
+
+```bash
+make help       # Show available commands
+make install    # Install dependencies
+make test       # Run tests
+make coverage   # Run tests with coverage
+make clean      # Clean generated files
+make run        # Run the FastAPI server
+make dev        # Run server in development mode
+```
+
+## 🐳 Docker Commands
+
+```bash
+# Build and run all services
+docker-compose up --build
+
+# Run in background
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+
+# Remove volumes (database data)
+docker-compose down -v
+```
+
+## 🤝 Development Workflow
+
+1. Create a feature branch
+2. Make your changes
+3. Write/update tests
+4. Run tests with coverage
+5. Ensure coverage doesn't decrease
+6. Commit and push changes
