@@ -1,6 +1,6 @@
 # Task Management CRUD Application
 
-A full-stack task management application built with React Router, FastAPI, and MySQL, containerized with Docker.
+A full-stack task management application built with React Router, FastAPI, and MySQL, containerized with Docker. Please dont run this in production.
 
 ## 🚀 Features
 
