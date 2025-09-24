@@ -1,65 +1,40 @@
-# Task Management API - HMCTS Technical Assessment
+# Task Management CRUD Application
 
-A full-stack task management application built with FastAPI (backend) and React (frontend) for HMCTS coding challenge.
+A full-stack task management application built with React Router, FastAPI, and MySQL, containerized with Docker.
 
 ## 🚀 Features
 
-- **RESTful API** with complete CRUD operations
-- **SQLAlchemy ORM** with support for both MySQL (production) and SQLite (development)
-- **Comprehensive test suite** with coverage reporting
-- **Docker support** for containerized deployment
-- **API documentation** with OpenAPI/Swagger
-- **Type safety** with Pydantic models
-- **Database migrations** ready architecture
-
-## 📋 Prerequisites
-
-- Python 3.11+
-- Node.js 18+
-- Docker and Docker Compose (optional)
-- Git
+- **Create, Read, Update, Delete** tasks
+- **Task Status Management** - Todo, In Progress, Completed, Cancelled
+- **Due Date Tracking** with visual indicators for overdue tasks
+- **Responsive Design** with card-based layout
+- **Interactive API Documentation** via Swagger UI
+- **Containerized Architecture** for easy deployment
 
 ## 🛠️ Tech Stack
 
-### Backend
-- **FastAPI** - Modern web framework for building APIs
-- **SQLAlchemy 2.0** - SQL toolkit and ORM
-- **Pydantic** - Data validation using Python type annotations
-- **MySQL/SQLite** - Database (MySQL in Docker, SQLite for local dev)
-- **pytest** - Testing framework with coverage support
-
 ### Frontend
-- **React** - UI library
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Build tool and dev server
+- **React Router** - Modern React framework with SSR support
+- **TypeScript** - Type-safe development
+- **Responsive UI** - Mobile-friendly design
 
-## 🏗️ Project Structure
+### Backend
+- **FastAPI** - High-performance Python web framework
+- **SQLAlchemy** - SQL toolkit and ORM
+- **MySQL 8.0** - Relational database
+- **Pydantic** - Data validation using Python type annotations
 
-```
-DTS-developer-response/
-├── fastapi-backend/         # Backend API
-│   ├── main.py            # FastAPI application & endpoints
-│   ├── models.py          # SQLAlchemy models
-│   ├── schemas.py         # Pydantic schemas
-│   ├── crud.py            # CRUD operations
-│   ├── database.py        # Database configuration
-│   ├── requirements.txt   # Python dependencies
-│   ├── Dockerfile         # Backend container config
-│   └── tests/             # Test suite
-│       ├── conftest.py    # Test configuration
-│       ├── test_tasks.py  # Unit tests
-│       └── test_integration.py # Integration tests
-├── react-frontend/         # Frontend application
-│   ├── src/               # React source code
-│   ├── package.json       # Node dependencies
-│   └── Dockerfile         # Frontend container config
-├── docker-compose.yml      # Multi-container setup
-└── README.md              # This file
-```
+### DevOps
+- **Docker & Docker Compose** - Containerization and orchestration
+- **Health Checks** - Automated container health monitoring
+
+## 📋 Prerequisites
+
+- Docker Desktop installed and running
+- Git for version control
+- Port 3000 (frontend), 8000 (backend), and 3306 (database) available
 
 ## 🚀 Quick Start
-
-### Local Development
 
 1. **Clone the repository**
    ```bash
@@ -67,170 +42,127 @@ DTS-developer-response/
    cd DTS-developer-response
    ```
 
-2. **Backend Setup**
+2. **Start the application**
    ```bash
-   cd fastapi-backend
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip3 install -r requirements.txt
+   docker-compose up --build
    ```
 
-3. **Run the Backend**
-   ```bash
-   uvicorn main:app --reload
-   ```
-   The API will be available at http://localhost:8000
+3. **Access the application**
+   - Frontend: http://localhost:3000
+   - API Documentation: http://localhost:3000/api-docs
+   - Backend API: http://localhost:8000
+   - Interactive API Docs: http://localhost:8000/docs
 
-4. **Frontend Setup** (in a new terminal)
-   ```bash
-   cd react-frontend
-   npm install
-   npm run dev
-   ```
-   The frontend will be available at http://localhost:3000
+## 🏗️ Project Structure
 
-### Docker Deployment
+```
+DTS-developer-response/
+├── docker-compose.yml           # Docker orchestration
+├── fastapi-backend/            # Backend service
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   ├── main.py                 # FastAPI application
+│   ├── models.py              # SQLAlchemy models
+│   └── database.py            # Database configuration
+└── react-router-frontend/      # Frontend service
+    ├── Dockerfile
+    ├── package.json
+    └── app/
+        ├── routes/            # React Router pages
+        │   ├── _index.tsx     # Tasks list page
+        │   ├── tasks.$id.tsx  # Task detail page
+        │   ├── tasks.new.tsx  # Create task page
+        │   └── api-docs.tsx   # API documentation page
+        └── root.tsx           # App layout with navigation
 
-Run the entire stack with Docker Compose:
-
-```bash
-docker-compose up --build
 ```
 
-Services will be available at:
-- Backend API: http://localhost:8000
-- Frontend: http://localhost:3000
-- API Documentation: http://localhost:8000/docs
+## 🔧 Development
 
-## 📚 API Documentation
+### Running without Docker
 
-### Interactive Documentation
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-### API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/` | Health check endpoint |
-| POST | `/tasks/` | Create a new task |
-| GET | `/tasks/` | Get all tasks (with pagination) |
-| GET | `/tasks/{task_id}` | Get a specific task |
-| PUT | `/tasks/{task_id}` | Update a task |
-| PATCH | `/tasks/{task_id}/status` | Update task status only |
-| DELETE | `/tasks/{task_id}` | Delete a task |
-
-### Task Model
-
-```json
-{
-  "id": 1,
-  "title": "Complete technical assessment",
-  "description": "Build a CRUD API for task management",
-  "status": "in_progress",
-  "due_date": "2025-12-31T10:00:00",
-  "created_at": "2025-09-23T10:00:00",
-  "updated_at": "2025-09-23T10:00:00"
-}
-```
-
-### Status Values
-- `todo` - Task not started
-- `in_progress` - Task in progress
-- `completed` - Task completed
-- `cancelled` - Task cancelled
-
-## 🧪 Testing
-
-### Run Tests
+**Backend:**
 ```bash
 cd fastapi-backend
-python3 -m pytest tests/ -v
+pip install -r requirements.txt
+uvicorn main:app --reload
 ```
 
-### Run Tests with Coverage
+**Frontend:**
 ```bash
-# Using the script
-./run_coverage.sh
-
-# Using make
-make coverage
-
-# Using pytest directly
-python3 -m pytest tests/ --cov=. --cov-report=term-missing --cov-report=html -v
+cd react-router-frontend
+npm install
+npm run dev
 ```
-
-### View Coverage Report
-```bash
-# Serve HTML report
-make serve-coverage
-# Open http://localhost:8080 in your browser
-
-# Or open directly
-$BROWSER htmlcov/index.html
-```
-
-### Test the API Manually
-```bash
-cd fastapi-backend
-python3 test_api.py
-```
-
-## 🔧 Configuration
 
 ### Environment Variables
 
-Create a `.env` file in the `fastapi-backend` directory:
+The application uses the following environment variables (configured in docker-compose.yml):
 
-```env
-# Database URL for production (optional)
-DATABASE_URL=mysql+pymysql://user:password@localhost:3306/taskdb
+- `API_URL` - Backend API URL for frontend SSR
+- `DATABASE_URL` - MySQL connection string
+- `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD` - Database credentials
 
-# If not set, SQLite will be used for development
-```
+## 📝 API Endpoints
 
-### Database Configuration
+### Frontend Routes (Port 3000)
+| Route | Description |
+|--------|-------------|
+| `/` | Tasks list page |
+| `/tasks/new` | Create new task form |
+| `/tasks/{id}` | Task detail page |
+| `/tasks/{id}/edit` | Edit task form |
+| `/api-docs` | API documentation (iframe) |
 
-The application automatically selects the database based on the environment:
-- **Production/Docker**: MySQL (when `DATABASE_URL` is set)
-- **Development**: SQLite (automatic fallback)
+### Backend API Endpoints (Port 8000)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/` | Health check endpoint |
+| GET | `/docs` | Interactive API documentation (Swagger UI) |
+| GET | `/tasks/` | List all tasks |
+| POST | `/tasks/` | Create a new task |
+| GET | `/tasks/{id}` | Get task details |
+| PUT | `/tasks/{id}` | Update a task |
+| DELETE | `/tasks/{id}` | Delete a task |
 
-## 📦 Make Commands
+## 🐛 Troubleshooting
 
+### Common Issues
+
+1. **Port already in use**
+   - Stop any services using ports 3000, 8000, or 3306
+   - Or modify the port mappings in `docker-compose.yml`
+
+2. **Database connection errors**
+   - Ensure MySQL container is healthy: `docker-compose ps`
+   - Check logs: `docker-compose logs mysql`
+
+3. **Frontend can't connect to backend**
+   - Verify backend is running: `docker-compose logs fastapi-backend`
+   - Ensure `API_URL` environment variable is set correctly
+
+### Viewing Logs
 ```bash
-make help       # Show available commands
-make install    # Install dependencies
-make test       # Run tests
-make coverage   # Run tests with coverage
-make clean      # Clean generated files
-make run        # Run the FastAPI server
-make dev        # Run server in development mode
-```
-
-## 🐳 Docker Commands
-
-```bash
-# Build and run all services
-docker-compose up --build
-
-# Run in background
-docker-compose up -d
-
-# View logs
+# All services
 docker-compose logs -f
 
-# Stop all services
-docker-compose down
-
-# Remove volumes (database data)
-docker-compose down -v
+# Specific service
+docker-compose logs -f fastapi-backend
 ```
 
-## 🤝 Development Workflow
+### Rebuilding Containers
+```bash
+docker-compose down
+docker-compose up --build
+```
 
-1. Create a feature branch
-2. Make your changes
-3. Write/update tests
-4. Run tests with coverage
-5. Ensure coverage doesn't decrease
-6. Commit and push changes
+## 🧪 Testing
+
+Run the backend tests:
+```bash
+docker-compose exec fastapi-backend pytest
+```
+
+## 📄 License
+
+This project is part of a development challenge.
