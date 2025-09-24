@@ -9,7 +9,8 @@ interface Task {
 }
 
 export async function loader({ params }: { params: { id: string } }) {
-    const response = await fetch(`http://localhost:8000/tasks/${params.id}`);
+    const apiUrl = process.env.API_URL || 'http://localhost:8000';
+    const response = await fetch(`${apiUrl}/tasks/${params.id}`);
     if (!response.ok) {
         throw new Response("Task not found", { status: 404 });
     }
@@ -17,11 +18,11 @@ export async function loader({ params }: { params: { id: string } }) {
 }
 
 export async function action({ request, params }: { request: Request, params: { id: string } }) {
+    const apiUrl = process.env.API_URL || 'http://localhost:8000';
     const formData = await request.formData();
     const updates = Object.fromEntries(formData);
-    
     try {
-        const response = await fetch(`http://localhost:8000/tasks/${params.id}`, {
+        const response = await fetch(`${apiUrl}/tasks/${params.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

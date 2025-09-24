@@ -6,4 +6,5 @@ export default [
   route("tasks/:id", "routes/tasks.$id.tsx"),
   route("tasks/:id/edit", "routes/tasks.$id.edit.tsx"),
   route("tasks/:id/delete", "routes/tasks.$id.delete.tsx"),
+  route("api-docs", "routes/api-docs.tsx")
 ] satisfies RouteConfig;
