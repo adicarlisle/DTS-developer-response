@@ -2,6 +2,7 @@ import {
   isRouteErrorResponse,
   Links,
   Meta,
+  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -25,24 +26,51 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
+    <>
+      <nav style={{ padding: '1rem', backgroundColor: '#f0f0f0', marginBottom: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <NavLink to="/" style={{ fontSize: '1.5rem', fontWeight: 'bold', textDecoration: 'none' }}>
+            Task Manager
+          </NavLink>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <NavLink to="/" style={{ textDecoration: 'none' }}>All Tasks</NavLink>
+            <NavLink 
+              to="/tasks/new" 
+              style={{ 
+                textDecoration: 'none', 
+                backgroundColor: '#007bff', 
+                color: 'white', 
+                padding: '0.5rem 1rem', 
+                borderRadius: '4px' 
+              }}
+            >
+              + New Task
+            </NavLink>
+          </div>
+        </div>
+      </nav>
+      <main style={{ padding: '0 2rem' }}>
+        <Outlet />
+      </main>
+    </>
   );
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+  <>
+  <nav>
+    <NavLink to="/"> RR</NavLink>
+    <div>
+    <NavLink to="/"> Items</NavLink>
+    <NavLink to="/new"> New Items</NavLink>
+    </div>
+  </nav>
+  <main>
+  <Outlet />
+  </main>
+  </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

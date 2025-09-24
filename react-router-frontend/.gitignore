@@ -1,6 +1,81 @@
-.DS_Store
-/node_modules/
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
 
-# React Router
-/.react-router/
-/build/
+# Testing
+coverage/
+*.lcov
+.nyc_output/
+
+# Production build
+build/
+dist/
+.react-router/
+
+# Development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+.tsc-cache/
+
+# Package manager locks (choose based on what you use)
+# If using npm, keep package-lock.json
+# If using yarn, add:
+# yarn.lock
+# If using pnpm, add:
+# pnpm-lock.yaml
+
+# Temporary files
+.tmp/
+.temp/
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Optional: Uncomment if you have specific needs
+# Static asset caches
+# .cache/
+# .parcel-cache/
+
+# ESLint cache
+.eslintcache
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
