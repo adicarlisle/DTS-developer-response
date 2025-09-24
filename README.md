@@ -57,7 +57,7 @@ A full-stack task management application built with React Router, FastAPI, and M
 
 ```
 DTS-developer-response/
-├── docker-compose.yml           # Docker orchestration
+├── docker-compose.yml           # Docker orchestration & MySQL init
 ├── fastapi-backend/            # Backend service
 │   ├── Dockerfile
 │   ├── requirements.txt
@@ -67,14 +67,13 @@ DTS-developer-response/
 └── react-router-frontend/      # Frontend service
     ├── Dockerfile
     ├── package.json
-    └── app/
-        ├── routes/            # React Router pages
-        │   ├── _index.tsx     # Tasks list page
-        │   ├── tasks.$id.tsx  # Task detail page
-        │   ├── tasks.new.tsx  # Create task page
-        │   └── api-docs.tsx   # API documentation page
-        └── root.tsx           # App layout with navigation
-
+    ├── app/
+    │   ├── routes/            # React Router pages
+    │   │   ├── _index.tsx     # Tasks list page
+    │   │   ├── tasks.$id.tsx  # Task detail page
+    │   │   ├── tasks.new.tsx  # Create task page
+    │   │   └── api-docs.tsx   # API documentation page
+    │   └── root.tsx           # App layout with navigation
 ```
 
 ## 🔧 Development
@@ -125,6 +124,40 @@ The application uses the following environment variables (configured in docker-c
 | PUT | `/tasks/{id}` | Update a task |
 | DELETE | `/tasks/{id}` | Delete a task |
 
+## 🧪 Testing
+
+### Run Backend Tests
+```bash
+# Run tests inside Docker container
+docker-compose exec fastapi-backend pytest
+
+# Run with verbose output
+docker-compose exec fastapi-backend pytest -v
+
+# Run specific test file
+docker-compose exec fastapi-backend pytest tests/test_api.py -v
+```
+
+### Test Coverage
+```bash
+
+# View coverage in terminal
+docker-compose exec fastapi-backend pytest --cov=. --cov-report=term-missing
+
+```
+
+### Test Structure
+- `tests/test_api.py` - API endpoint tests
+- `tests/test_integration.py` - Integration tests
+- `tests/test_tasks.py` - Task-specific tests
+
+The test suite covers:
+- ✅ All CRUD operations
+- ✅ Health check endpoint
+- ✅ Input validation
+- ✅ Error handling (404, 422 responses)
+- ✅ Edge cases (missing fields, invalid data)
+
 ## 🐛 Troubleshooting
 
 ### Common Issues
@@ -154,13 +187,6 @@ docker-compose logs -f fastapi-backend
 ```bash
 docker-compose down
 docker-compose up --build
-```
-
-## 🧪 Testing
-
-Run the backend tests:
-```bash
-docker-compose exec fastapi-backend pytest
 ```
 
 ## 📄 License

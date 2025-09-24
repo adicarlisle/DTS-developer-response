@@ -5,8 +5,8 @@ from models import TaskStatus
 
 class TaskBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=255)
-    description: Optional[str] = None
-    status: TaskStatus = TaskStatus.TODO
+    description: Optional[str] = Field(None, max_length=1000)
+    status: TaskStatus
     due_date: datetime
 
 class TaskCreate(TaskBase):
@@ -14,7 +14,7 @@ class TaskCreate(TaskBase):
 
 class TaskUpdate(BaseModel):
     title: Optional[str] = Field(None, min_length=1, max_length=255)
-    description: Optional[str] = None
+    description: Optional[str] = Field(None, max_length=1000)
     status: Optional[TaskStatus] = None
     due_date: Optional[datetime] = None
 
